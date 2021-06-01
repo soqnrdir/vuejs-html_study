@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴포넌트</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <h3>전역 등록 컴포넌트</h3>
+        <div id="app">
+            <riel-button></riel-button>
+        </div>
+        <div id="app-1"> 
+            <riel-button></riel-button>
+        </div>
+
+    <hr>
+
+    <!-- 전역등록 컴포넌트를 무분별하게 사용하면 자바스크립트의 양이 불필요하게 커지게 되므로 지역 등록 컴포넌트 사용이 가능할 때는 사용하는 것이 유용하다.  -->
+    <h3>지역 등록 컴포넌트</h3>
+        <div id="app-2"> 
+            <riel2-button></riel2-button>
+        </div>
+
+    <script>
+        // hello-world라는 컴포넌트를 생성해 다른 컴포넌트에서도 사용할 수 있게 만들어준다.
+        Vue.component('hello-world', {
+            template: '<div>hello world</div>'
+        });
+        //전역으로 생성
+        Vue.component('riel-button', {
+            // 위에 선언했던 hello-world 컴포넌트를 아래에서 선언해 사용할 수 있다. 
+            template:  `
+            <div>
+                {{ name }}<br>
+                <hello-world></hello-world>
+                <button @click="changeText">Click</button>
+            </div>
+            `,
+            //컴포넌트를 생성해 사용할때는 아래처럼 함수식으로 사용해서 써야 함.
+            data() {
+                return {
+                    name: 'riel'
+                }
+            },
+            methods: {
+                changeText() {
+                    this.name = 'riel updated';
+                }
+            }
+        });
+        // 지역으로 선언
+        const HelloWorld = {
+            template: '<div>hello world</div>'
+        }
+
+        const RielButton = {
+            components : {
+                'hello-world' : HelloWorld
+            },
+            template:  `
+            <div>
+                {{ name }}<br>
+                <hello-world></hello-world>
+                <button @click="changeText">Click</button>
+            </div>
+            `,
+            //컴포넌트를 생성해 사용할때는  아래처럼 함수식으로 사용해서 써야 함.
+            data() {
+                return {
+                    name: 'riel'
+                }
+            },
+            methods: {
+                changeText() {
+                    this.name = 'riel updated';
+                }
+            }
+        }
+
+        const app = new Vue({
+            el: '#app',
+     
+        })
+        const app1 = new Vue({
+            el: '#app-1',
+
+        })
+
+        const app3 = new Vue({
+            el: '#app-2',
+            //지역으로 사용할때는 아래처럼 components로 명시해줘야만 컴포넌트 사용을 할 수 있다.
+            components: {
+                'riel2-button': RielButton
+            }
+     
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-if, v-show</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>조건문</h2>
+        <h3>v-if(토글)</h3>
+            <!-- 다중으로 적용하고 싶을때 단일이면 div태그에 바로 선언하면된다.  -->
+            <template v-if="show">        
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+            </template>
+            <!-- v-if에 true가 들어가면 렌더링이 되고 false라면 되지않는다. true상태에서 false로 바뀌면 그 상태또한 보이지 않게 바뀐다. -->
+            <!-- <div v-if="show">Yes</div> -->
+            <!-- v-if가 true가 아니라면..  -->
+            <div v-else>No</div>
+            <br>
+            <button @click="toggleShow">Toggle</button>
+
+        <h3>v-if(증가)</h3>
+            <template v-if="number === 1">        
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+            </template>
+            <div v-else-if="number ===2">Hi</div>
+            <div v-else>No</div>
+            <br>
+            <button @click="toggle">Toggle</button>
+
+        <h3>v-show</h3>
+            <!-- dispaly 상태를 변경  -->
+            <div v-show="show2">Yes</div>
+            <br>
+            <button @click="toggle">Toggle</button>
+
+        <!-- v-if와 v-show차이점은 v-if는 토글 비용이 높고 v-show는 초기 렌더링 비용이 더높다.(스타일 요소를 넣어주기때문) 
+            즉, 매우 자주 바꾸기를 원한다면 v-show, 런타임 시 조건이 바뀌지 않는다면 v-if를 권장한다.  -->
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                show: true,
+                number : 1,
+                show2: false
+
+            },
+            methods: {
+                toggleShow() {
+                    this.show = !this.show;
+                },
+                increaseNumber() {
+                    this.number++;
+                },
+                toggle() {
+                    this.show2 = !this.show2;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

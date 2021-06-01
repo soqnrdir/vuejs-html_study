@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트, 데이터 양방향 바인딩</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h3>이벤트1</h3>
+            {{ year }} <br>
+            <button v-on:click="plus">더하기</button>
+            <button v-on:click="minus">빼기</button>
+        <h3>이벤트2</h3>
+            <!-- submit함수 이벤트가 진행되고 form 형식이니 reload. -->
+            <!-- reload가 되는것을 막고 싶으면 .prevent를(=event.preventDefault()) 붙여 기본이벤트(reload)를 막아 console.log도 볼 수 있다. 이외에 stop도 많이쓰임! event.stopPropagation()과 같은 기능   -->
+            <form v-on:submit.prevent="submit">
+                <input type="text"><br>
+                <button type="submit">Submit</button>
+            </form>
+        <h3>이벤트3</h3>
+            <!-- 특정키를 입력했을 때 발생하는 이벤트 -->
+            <form v-on:submit.prevent="submit">
+                <!-- enter치면 submit발생, 이외에도 .tab, .space 등이 있다. -->
+                <input v-on:keyup.enter="submit">
+            </form>
+        <h3>실시간으로 입력한 값 {{ text }}와 동일하게 맞추기</h3>
+            <form v-on:submit.prevent="submit">
+                <!-- v-on은 @로 대체가능 -->
+                <input type="text" :value="text" @keyup="updateText"><br>
+                {{ text }} <br>
+                <button type="submit">Submit</button>
+            </form>
+        <h3>데이터 양방향 바인딩</h3>
+            <form v-on:submit.prevent="submit">
+                <!-- v-model을 사용할시 위의 이벤트와 동일하게 사용가능, 따로 함수를 정의하지 않아도 되는 이점이 있다. -->
+                <input type="text2" v-model='text2'><br>
+                {{ text2 }} <br>
+                <button type="submit">Submit</button>
+            </form>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                year: 2018,
+                text: 'text',
+                text2: 'text'
+            },
+            methods: {
+                plus() {
+                    this.year++;
+                },
+                minus() {
+                    this.year--;
+                },
+                submit() {
+                    alert('submitted');
+                    console.log('hello');
+                },
+                // keyup이벤트에서 오브젝트를 자동으로 넣어줌
+                updateText(event) {
+                    //target의 value는 input에 입력한 값임
+                    this.text = event.target.value;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

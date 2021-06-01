@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>watch</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+       {{ message }}<br>
+       <button @click="changeMessage">Click</button><br>
+       {{ updated }}
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: '헬로우',
+                updated: '아니요'
+            },
+            methods: {
+               changeMessage() {
+                   this.message = '코지코더';
+               }
+            },
+            computed: {
+                reversedMessage() {
+                    return this.message.split('').reverse().join('')
+                }
+            },
+            //감시하고 싶은 객체를 넣어줌
+            watch: {
+                //매개변수로 newVal(바뀐값), oldVal(이전값)를 갖는다.
+                message(newVal, oldVal) {
+                    console.log(newVal, oldVal);
+                    this.updated = '네';
+                }
+            }
+        })
+    </script>
+</body>
+</html>

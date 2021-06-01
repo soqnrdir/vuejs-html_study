@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여러개의 Vue 인스턴스 사용</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ name }}<br>
+        <button @click="changeText">Click</button>
+    </div>
+    <div id="app-1"> 
+        {{ name }}<br>
+        <button @click="changeText">Click</button>
+    </div>
+    <script>
+        //다른 뷰에 접근하고 싶을때 변수를 생성해 담아주고
+        const app = new Vue({
+            el: '#app',
+            data: {
+                name: 'riel'
+            },
+            methods: {
+                changeText() {
+                    //this가아닌 app1을 가리켜 id=app-1의 요소가 변경된다.
+                    app1.name = 'riel updated';
+                }
+            }
+        })
+        const app1 = new Vue({
+            el: '#app-1',
+            data: {
+                name: 'riel1'
+            },
+            methods: {
+                changeText() {
+                    app.name = 'riel1 updated';
+                }
+            }
+        })
+    </script>
+</body>
+</html>

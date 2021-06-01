@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class, style 바인딩</title>
+    <style>
+
+        .red {
+            color : red;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+       <h3>기본</h3>
+            <div class="red bold">Hello</div>
+       <h3>클래스 데이터 바인딩</h3>
+            <!-- 기본상태는 false로 지정한 클래스가 적용되지 않는다. 만약, 클래스 이름에 '-'가 붙는다면.. ex) font-bold -> 'font-bold' 이런식으로 ''로 감싸줘야 된다.  -->
+            <div :class="{ red: isRed, bold: isBold }">Hello</div>
+            <!-- update를 통해 class의 상태를 바꿔준다. true -->
+            <button @click="update">Click</button>
+        <h3>스타일 데이터 바인딩</h3>
+            <!-- {}안에는 자바객체가 들어간다.  -->
+            <div :style="{ color: red, fontSize: size }">Hello</div>
+            <button @click="update2">Click</button>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                isRed: false,
+                isBold: false,
+                
+                red: 'red',
+                size: '30px'
+            },
+            methods: {
+               update() {
+                    this.isRed = !this.isRed;
+                    this.isBold = !this.isBold;
+               },
+               update2() {
+                    this.red = 'blue';
+                    this.size = '50px';
+               }
+            }
+        })
+    </script>
+</body>
+</html>

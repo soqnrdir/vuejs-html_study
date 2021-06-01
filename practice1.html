@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뷰 데이터, 메소드, 데이터 바인딩</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 1. 기본 data에서 바로 속성을 정의할 때 -->
+            <!-- {{name}} -->
+        <!-- 2. 한 객체에 포함된 속성일 때 -->
+            <!-- {{person.name}} {{person.age}} -->
+        <!-- 3. 정의된 함수를 불러올때 '함수명()' -->
+            <!-- {{ nextYear() }} -->
+        <!-- 4. 함수에 인자(argument)가 있을때 -->
+            {{ nextYear('안녕') }}
+        <!-- 데이터 바인딩 : type과 value앞에 v-bind:를 붙여서 Vue안에 해당하는 값을 가져온다. -->
+            <!-- <input v-bind:type="type" v-bind:value="inputData"> -->
+        <!-- 데이터 바인딩을 할때 위에처럼 v-bind:를 축약해서 쓰는데 :만 앞에 붙여도 사용가능하다. -->
+            <input :type="type" :value="inputData">
+            <!-- a 태그의 링크또한 데이터 바인딩으로 설정 가능하다. -->
+            <a :href="link">유튜브</a>
+            <!-- 함수 또한 사용할 수 있다. -->
+            <a :href="getKossieCoderLink('kossiecoder')">코지 코더 채널</a>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data : {
+                //한 객체에 속성을 부여 , 속성앞에 person. 이라고 명시해야함
+                person: {
+                    name : '리엘 코더',
+                    age: 25
+                },
+                inputData : 'hello',
+                type: 'text',
+                link: 'https://www.youtube.com/'
+            },
+            //원하는 함수를 쓰고 그 함수를 vue 어플리케이션에서 사용가능함
+            methods: {
+                getKossieCoderLink(channel) {
+                    return this.link + channel;
+                },
+                //nextYear이라는 함수 선언, 매개변수(parameter)도 받을 수 있음
+                // nextYear: function(greeting) {
+                //아래처럼 축약해서 써도 무관하다.
+                nextYear(greeting) {
+                    //this.해서 바로 person으로 가는 이유는 vue.js에서 안에있는 data들을 this안에 넣어주기 때문에 바로 this.person 이런식으로 person data에 접근할 수 있다.
+                    return greeting + '! ' + this.person.name + '는 내년에 ' + (this.person.age + 1) + '살 입니다.';
+                },
+                //다른 함수를 this.함수명으로 사용가능
+                otherMethod : function() {
+                    this.nextYear
+                }
+            }
+        })
+    </script>
+</body>
+</html>

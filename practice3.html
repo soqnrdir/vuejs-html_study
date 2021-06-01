@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computed</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h3>간단한 연산</h3>
+            {{ number + 1}}
+        <h3>복잡한 연산</h3>
+            <!-- String인 타입의 문자가 하나하나 배열에 담겨서 reverse로 순서를 뒤바꾼다음에 join을 하면 array(배열)이 합쳐져 String으로 표현이된다.  -->
+            {{ hello.split('').reverse().join('') }}
+        <h3>computted를 사용한 연산</h3>
+            <button @click="changeMessage">Click</button>
+            <!-- 함수를 쓸때는 뒤에()를 붙여줘야 하는데 computed는 따로 안써줘도 된다 그리고 comutted는 캐싱을 하고 methods는 캐싱을하지않는다는 차이점이 있다! 
+                 처음에 한번계산하고 캐싱된 값을 계속 사용할 수 있다! -->
+            {{ reversedMessage }} 
+            {{ reversedMessage }}
+            {{ reversedMessage }}
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                number: 1,
+                hello: '안녕하세요',
+                message: '헬로우'
+            },
+            methods: {
+               changeMessage() {
+                   this.message = '코지코더';
+               }
+            },
+            computed: {
+                reversedMessage() {
+                    return this.message.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+</body>
+</html>
